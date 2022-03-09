@@ -15,7 +15,7 @@ The server component should implement a single method Query, which takes a singl
 Please check out the [Design Document](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/design/design%20document.pdf) for details.
 
 ## Tutorial
-How to run and test our code? Here we provide you examples of functional test and load test. Please check out the [Outputs](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/outputs/output.pdf) for details.
+How to run and test our code? Here we provide you examples of functional test and load test. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/outputs/output.pdf) for details.
 
 ## Evaluation
 A simple load test and performance measurements have been performed by us. The goal here is understand how to perform load tests on distributed applications and understand performance. Deploy more than one more client process and have each one make concurrent requests to the server. The clients should be running on a different machine than the server. Measure the latency seen by the client for different types of requests, such as query and buy.
@@ -40,7 +40,7 @@ We use protobuf to create appropriate message structures for arguments and retur
 Please check out the [Design Document](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/design/design%20document.pdf) for details.
 
 ## Tutorial
-How to run and test our code? Here we provide you examples of functional test and load test. Please check out the [Outputs](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/outputs/output.pdf) for details.
+How to run and test our code? Here we provide you examples of functional test and load test. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/outputs/output.pdf) for details.
 
 ## Evaluation
 A simple load test and performance measurements have been performed by us. The goal here is understand how to perform load tests on distributed applications and understand performance. Deploy more than one more client process and have each one make concurrent requests to the server. The clients should be running on a different machine than the server. Measure the latency seen by the client for different types of requests, such as query and buy.
