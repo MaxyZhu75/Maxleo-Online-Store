@@ -1,4 +1,4 @@
-# :elephant: Toy Store
+# :elephant: Online Toy Store
 This lab assignment is from UMass Amherst Computer Science department- COMPSCI677 Distributed & Operating System. You will see two programming parts as follows. In the first part, we design our own thread pool and use it to write a simple client-server online store that uses network sockets. This part we will show you how thread pools work internally. In the second part, we will use gRPC and built-in thread pool mechanisms to write the client-server online store. This part will show you how we use modern frameworks to write distributed applications, since most programmers simply use higher-level abstractions than lower-level abstractions in workplace.
 
 
@@ -15,9 +15,7 @@ The server component should implement a single method Query, which takes a singl
 Please check out the [Design Document](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/design/design%20document.pdf) for details.
 
 ## Tutorial
-How to run and test our code? 
-
-Here we provide you examples of functional test and load test. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/outputs/output.pdf) for details.
+How to run and test our code? Here we provide examples of functional test & load test. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/outputs/output.pdf) for details.
 
 ## Evaluation
 A simple load test and performance measurements have been performed by us. The goal here is understand how to perform load tests on distributed applications and understand performance. Deploy more than one more client process and have each one make concurrent requests to the server. The clients should be running on a different machine than the server. Measure the latency seen by the client for different types of requests, such as query and buy.
@@ -42,9 +40,7 @@ We use protobuf to create appropriate message structures for arguments and retur
 Please check out the [Design Document](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/design/design%20document.pdf) for details.
 
 ## Tutorial
-How to run and test our code? 
-
-Here we provide you examples of functional test and load test. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/outputs/output.pdf) for details.
+How to run and test our code? Here we provide examples of functional test & load test. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Toy-Store/blob/main/summary/outputs/output.pdf) for details.
 
 ## Evaluation
 A simple load test and performance measurements have been performed by us. The goal here is understand how to perform load tests on distributed applications and understand performance. Deploy more than one more client process and have each one make concurrent requests to the server. The clients should be running on a different machine than the server. Measure the latency seen by the client for different types of requests, such as query and buy.
