@@ -38,7 +38,7 @@ class Myqueue(object):
  
 
 
-# Prodecer thread class
+# Producer thread class
 class ConnectionHandleThread(Thread):
     def run(self):
         
