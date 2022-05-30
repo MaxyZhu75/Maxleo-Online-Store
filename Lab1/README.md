@@ -38,7 +38,7 @@ Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Onlin
 
 
 
-How to run and test our code? Here we provide examples of functional test & load test. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab1/summary/outputs/output.pdf) for details.
+Here we provide a tutorial for you to run and test our source code. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab1/summary/outputs/output.pdf) for details.
 
 
 
@@ -88,7 +88,7 @@ Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Onlin
 
 
 ## Tutorial
-How to run and test our code? Here we provide examples of functional test & load test. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab1/summary/outputs/output.pdf) for details.
+Here we provide a tutorial for you to run and test our source code. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab1/summary/outputs/output.pdf) for details.
 
 
 
