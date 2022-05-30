@@ -46,7 +46,7 @@ Here we provide a tutorial for you to run and test our source code. Please check
 
 
 
-A simple load test and performance measurements have been performed in this lab. The goal here is understand how to perform load tests on distributed applications and understand performance. Deploy more than one more client process and have each one make concurrent requests to the server. The clients should be running on a different machine than the server. Measure the latency seen by the client for different types of requests, such as query and buy.
+A simple load test and performance measurements have been performed in this lab. The goal here is understand how to perform load tests on distributed applications and understand performance. Deploy more than one more client process and have each one make concurrent requests to the server. The clients should be running on a different machine than the server. And then measure the latency seen by the client.
 
 
 
