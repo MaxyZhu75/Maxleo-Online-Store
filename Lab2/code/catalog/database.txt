@@ -1,0 +1,4 @@
+Tux 25.99 80
+Whale 34.99 94
+Elephant 29.99 87
+Bird 39.99 98

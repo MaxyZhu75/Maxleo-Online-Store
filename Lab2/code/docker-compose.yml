@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  catalog:
+    build: .
+    image: catalog
+    volumes:
+      - ../src/catalog:/src
+  
+  order:
+    build: .
+    image: order
+    volumes:
+      - ../src/order:/src
+    depends_on:
+      - catalog
+    
+  front_end:
+    build: .
+    image: front_end
+    ports:
+      - 6060:6060
+    depends_on:
+      - catalog
+      - order
+    volumes:
+      - ../src/front_end:/src
