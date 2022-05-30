@@ -1,0 +1,10 @@
+Tux 25.99 100
+Whale 34.99 100
+Elephant 29.99 100
+Bird 39.99 100
+Risk 15.99 100
+Sand 19.99 100
+Jenga 21.99 100
+Uno 35.99 100
+Pinball 49.99 100
+Clue 9.99 100
