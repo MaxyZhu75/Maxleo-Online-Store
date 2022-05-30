@@ -2,7 +2,7 @@
 
 
 
-This project is from UMass Amherst Computer Science department. It provides an in-depth examination of the principles of distributed systems and advanced concepts in operating systems. Specifically, there are 3 lab assignments in this repository, covering topics include client-server programming, producer-consumer problem, gRPC framework, microservices architecture, handwritten HTTP frameworks, REST APIs, virtualization, Docker, caching, distributed scheduling, cluster fault tolerance, AWS Cloud, automated testing, etc.
+This project is from UMass Amherst Computer Science department. It provides an in-depth examination of the principles of distributed systems and advanced concepts in operating systems. Specifically, there are 3 totally lab assignments in this repository, covering topics include client-server programming, producer-consumer problem, gRPC framework, microservices architecture, handwritten HTTP frameworks, REST APIs, virtualization, Docker, caching, distributed scheduling, cluster fault tolerance, AWS Cloud, automated testing, etc.
 
 
 
