@@ -1,0 +1,29 @@
+syntax = "proto3";                                      // We go with syntax proto3
+service ToyStoreServer {
+    rpc Query(RequestBody) returns (QueryResponse) {}   // Query method takes message RequestBody, and returns message QueryResponse
+    rpc Buy(RequestBody) returns (BuyResponse) {}       // Buy method takes message RequestBody, and returns message BuyResponse
+}
+
+// Define a format of request for both query and buy
+message RequestBody {
+    string name = 1;     // Here it can be a string of toy name
+}
+
+// Define a format of response for query method
+message QueryResponse {
+    int32 stock=2;       // Here, it can be two integer type results
+    float price=3;
+}
+
+// Define a format of response for buy method
+message BuyResponse {
+    int32 result = 1;    // Here, it can be an integer type result
+}
+
+
+// Define basic properties for toys
+message Toy {
+    string name = 1;
+    int32 stock = 2;
+    float price = 3;
+}
