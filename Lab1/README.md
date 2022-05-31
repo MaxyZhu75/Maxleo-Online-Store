@@ -2,7 +2,7 @@
 
 
 
-You will see two programming parts in the following sections. In the first part, we will design our own thread pool, and use it to write a simple client-server online store that uses network sockets. This part will show you how thread pools work internally. In the second part, we will use gRPC and built-in thread pool mechanisms to write the client-server online store. This part will show you how we use modern frameworks to write distributed applications, since most programmers simply use higher-level abstractions than lower-level abstractions in workplace.
+You will see two programming parts in the following sections. In the first part, we aim to design our own thread pool, and use it to write a simple client-server online store that uses network sockets. This part will show you how thread pools work internally. In the second part, we will use gRPC and built-in thread pool mechanisms to write the client-server online store. This part will show you how we use modern frameworks to write distributed applications, since most programmers simply use higher-level abstractions than lower-level abstractions in workplace.
 
 
 
