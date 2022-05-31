@@ -18,7 +18,7 @@ You will see two programming parts in the following sections. In the first part,
 
 
 
-In this part, we implemented an online Toy store as a socket-based client-server application. Our design should be able multiple client processes making concurrent requests to the server. The main task here is to implement our own Thread Pool (not allowed to use a Thread Pool framework that are available by the language/libraries).
+In this part, we implemented an online Toy store as a socket-based client-server application. Our design should be able multiple client processes making concurrent requests to the server. The main task here is to implement our own thread pool (not allowed to use a thread pool framework that are available by the language/libraries).
 
 
 
