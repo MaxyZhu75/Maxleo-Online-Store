@@ -3,18 +3,17 @@
 
 
 This lab has the following learning outcomes with regards to advanced concepts in distributed operating systems.
-* Design distributed server applications using a multi-tier architecture and microservices.
-* Design virtualized applications.
-* Design interfaces for web application.
+* Designed distributed server applications using a multi-tier architecture and microservices.
+* Designed virtualized applications.
+* Designed interfaces for web application.
 
 
 
 The lab also has the following learning outcomes with regards to practice and modern technologies.
-* Learn how to implement a REST API server.
-* Learn how to measure the performance of a distributed application.
-* Learn how to use Docker to containerize your micro-service, and learn to manage an application consisting
-   of multiple containers using Docker Compose.
-* Learn how to automatically test a distributed application.
+* Learned how to implement a REST API server.
+* Learned how to measure the performance of a distributed application.
+* Learned how to use Docker to containerize your micro-service, and learn to manage an application consisting of multiple containers using Docker Compose.
+* Learned how to automatically test a distributed application.
 
 
 
