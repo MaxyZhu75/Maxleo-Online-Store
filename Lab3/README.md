@@ -1,237 +1,143 @@
-# 📲 Team Members
+# :elephant: Maxleo Online Store - Lab 3
 
 
-**Maoqin Zhu**
 
+This lab has the following learning outcomes with regards to advanced concepts in distributed operating systems.
+* Designed caching, replication, and consistency.
+* Designed fault tolerance and high availability.
 
-* Designed the application. Implemented automatted test source code. Test and help debug.
 
 
-* Write design document, output document and evaluation ducument. Add inline comments in source codes.
+The lab also has the following learning outcomes with regards to practice and modern technologies.
+* Learned how to deploy our application on the AWS cloud.
+* Learned how to measure the performance of a distributed application.
+* Learned how to automatically test a distributed application.
 
 
-**Yixiang Zhang**
+# Part 1 - Caching, Replication and Fault Tolerance
 
 
-* Designed the application. Implemented front-end server, catalog server, order server source code.
 
+![overview](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/figures/Overview.png)
 
-* Test and help debug.
 
 
-Thank you so much for your patience. If there is any configuration question, feel free to reach me out!
+## Problem Statement
 
 
-* Email: maoqinzhu@umass.edu or yixiangzhang@umass.edu
 
+This lab assignment is actually based on lab 2. We are further adding caching, replication, and fault tolerance to the micro-service toy store application. Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/design/design%20document.pdf) for details.
 
 
-# 💻 Lab 3: Caching, Replication and Fault Tolerance
-![overview](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/Overview.png)
 
+### Caching
 
-## Deployment Tutorial (on AWS)
-**Step1:** First, start our EC2 instance as described in homework6.
 
 
-**Step2:** Open specific ports on our EC2 instance. There are some ports to be opened in our lab: 22, 6060, 10086, 10010-10012
+We added caching to the front-end server to reduce the latency of the toy query requests. The front-end server start with an empty in-memory cache. Upon receiving a toy query request, it first checks the in-memory cache to see whether it can be served from the cache. If not, the request will then be forwarded to the catalog server, and the result returned by the catalog server will be stored in the cache.
 
 
-**$ aws ec2 authorize-security-group-ingress --group-name default --protocol tcp --port <number> --cidr 0.0.0.0/0**
 
+Cache consistency needs to be addressed whenever a toy is purchased or restocked. We implemented a server-push technique: catalog server sends invalidation requests to the front-end server after each purchase and restock. The invalidation requests cause the front-end server to remove the corresponding item from the cache.
 
-![port](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/port.png)
 
 
-**Step3:** Acess our EC2 instance and upload source code via SSH
+### Replication
 
 
-![aws1](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/aws1.png)
-    
 
-**Step4:** Start our application
+In order to make our services more robust, this time we implemented order server as an order cluster. Like in previous lab, when we start the application, we first start the catalog server, but what’s different in this lab is we start 3 replicas of the order server, each with a unique id number and its own order log. In the cluster, there should always exists one node called leader, and the rest are called follower nodes.
 
 
-We recommend you run following commands on our EC2 instance at first:
-    
-    
-**$ sudo apt-get update**
 
-    
-**$ sudo apt-get -y install python3-pip**
+Log consistency needs to be addressed too. In case of a successful buy (a new order number is generated), the leader node should propagate the information of the new order to other follower nodes.
 
 
-**$ pip3 install flask**
 
+### Fault Tolerance
 
-Now in order to start our application, simply open 5 terminals on our AWS EC2 instance, and run micro services in each terminal in specific order. After cd into different directories, type the following commands.
-    
 
-**$ python3 catalog_server.py**
 
-    
-**$ ID=1 PORT=10010 python3 order_server.py**
+Our goal is making sure that the online store application does not lose any order information due to crash failures. So the health check of each node in order cluster will be done by front-end server in our design. Only when it finds that the leader is unresponsive, it will redo the leader election according to the election rule. Furthermore, when a server in the cluster come back online from a crash, it should be able to pull the latest order log from other nodes in the cluster.
 
 
-**$ ID=2 PORT=10011 python3 order_server.py**
 
-    
-**$ ID=3 PORT=10012 python3 order_server.py**
-
-
-**$ python3 front_end.py**
-
-    
-![aws2](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/aws2.png)
-
-    
-## Functional Test Tutorial
-Looking at “test_func.py”, for different HTTP GET / HTTP POST, we created 19 test cases which correspond to 19 possible HTTP responses.
-Notice that our test cases are effective only when database is in initial state, because expected response is configured statically in testing codes. Of course, you can also run your own test case simply by configuring request parameters and expected responses in the method.
-
-
-**Notice that our test cases are effective only when database is in initial state, because expected response is configured statically in testing codes!!!** Of course, you can also run your own test case simply by configuring request parameters and expected responses in the method. The initial state of database should be:
-
-
-![database1](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/database.png)
-
-
-
-Looking at **“test_func.sh”**, this shell file will help us run all the 13 test cases.
-
-
-**Notice that each time if you are running this shell, please configure those IP addresses(environment variables) manually. Thank you!!!** And also be careful when you do local test. When starting a server, we will print IP address on your screen. Type that IP address as environment variable rather than “127.0.0.1”.
-
-
-![shell1](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/shell.png)
-
-
-Type the following command:
-
-
-**$ sh test_func.sh**
-
-
-For each test case(valid/invalid requests), if our application or micro-services work correctly, Python unittest will tell “ok” on your terminal. As you can see, all the functionalities is working correctly as follows.
-
-
-![func1](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/func.png)
-
-
-And also, after finishing those 19 test cases, we can see the database at catalog server has been recorded and persisted correctly.
-
-
-![func2](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/func1.png)
-
-
-
-## Load Test Tutorial
-Looking at “test_load.py”, it automatically sends 1000 Query, Buy or queryOrder requests. Python unittest can help measure the total latency seen by clients in this case. Hence, in terms of average latency for each request, we should divide the total time by 1000. 
-   
-    
-For different type of requests, we repeatedly run 5 clients at the same time, and measure the total latency seen by each client. There are 3 commands for each performance testing.
-
-
-**$ FRONT=IP address python3 -m unittest -v test_load.TestLoadPerformance.test_load_query**
-
-
-**$ FRONT=IP address python3 -m unittest -v test_load.TestLoadPerformance.test_load_buy**
-
-
-**$ FRONT=IP address python3 -m unittest -v test_load.TestLoadPerformance.test_load_queryOrder**
-
-
-You could check out the [output document](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/output.pdf) for details, the testing result could be like:
-
-
-![load1](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/load1.png)
-
-
-    
-## Caching Test Tutorial
-
-    
-**Caching Switch:** look at “front_end.py”, you can switch the state of caching by modifying the global variable “use_cach_flag”.
-
-    
-![cache](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/caching.png)    
-
-
-The command you type on your local machine: 
-    
-    
-**$ FRONT=IP address p=<probability> python3 client.py**
-
-
-For each experiment with different p, we are testing multiple times, and record the average latency. The output screenshots for different p and caching state can be like this:
-
-
-![cache1](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/caching1.png)
-    
- 
-    
-## Fault Tolerance Test Tutorial
-
-
-**Client Terminal:** we are sending 1000 buy requests using the code in load test.
-    
-    
-**$ FRONT=IP address python3 -m unittest -v test_load.TestLoadPerformance.test_load_buy**
-
-
-**Crash the follower with id = 1:** terminate the node with port = 10010 & id=1
-
-
-![fault1](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/fault1.png)
-
-
-**Restart the follower with id = 1:** restart the node with port = 10010 & id=1
-
-
-![fault2](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/fault2.png)
-
-
-**Crash the leader with id = 3:** since leader is crashed, front end performed the leader election, and notify other nodes who is the new leader. 
-
-
-![fault3](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/fault3.png)
-
-    
-**New leader notification:** restart the node with port = 10010 & id=1
-
-
-![fault4](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/fault4.png)
-![fault5](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/fault5.png)
-
-    
-**Restart the follower with id = 3:** restart the node with port = 10012 & id=3
-
-
-![fault6](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/fault6.png)
-    
-
-**Total latency seen by clients:**
-
-
-![fault7](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/fault7.png)
-       
-
-**Order log at each order server:**
-
-
-![fault8](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/figures/fault8.png) 
-    
-
-**In order to evaluate in what degree the clients can notice the failure, we do the same experiment without artificial crashes.**
-    
-
-You could check out the [evaluation document](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/evaluation%20document.pdf) for details.
-    
-    
 ## Way to Approach
-Please check [design document](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/design%20document.pdf) for details.
 
 
-## Simulation Results
-Please check [Output](https://github.com/umass-cs677/lab3-spring22-yixiangzhang/blob/main/docs/output.pdf) for details.
 
+Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/design/design%20document.pdf) for details.
+
+
+
+## Tutorial
+
+
+
+Here we provide a tutorial for you to run and test our source code. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/design/design%20document.pdf) for details.
+
+
+
+## Evaluation
+
+
+
+We applied **Python Unittest Module** to test the functionality & load performance of the full application as well as the micro-services. The unittest unit framework supports test automation, sharing of setup and shutdown code for tests, aggregation of tests into collections, and independence of the tests from the reporting framework.
+
+
+
+Please check out the [Evaluation Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/evaluation/evaluation%20document.pdf) for details.
+
+
+
+![evaluation](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/figures/func.png)
+
+
+
+
+# Part 2 - Deployment on AWS
+
+
+
+![part2](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/figures/aws3.png)
+
+
+
+## Problem Statement
+
+
+
+Amazon Elastic Compute Cloud (EC2) provides scalable computing capacity in the Amazon Web Services (AWS) Cloud. Using Amazon EC2 eliminates our need to invest in hardware up front, so we can develop and deploy applications faster. We can use Amazon EC2 to launch as many or as few virtual servers as we need, configure security and networking, and manage storage. Specifically, we are deploying our online application on an **m5a.large** instance in the us-east-1 region on AWS.
+
+
+
+## Way to Approach
+Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/design/design%20document.pdf) for details.
+
+
+
+## Tutorial
+Here we provide a basic AWS Cloud deployment tutorial for you. Please check out the [Evaluation Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/evaluation/evaluation%20document.pdf) and [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/design/design%20document.pdf) for details.
+
+
+
+## Evaluation
+
+
+
+We simulated crash failures by killing a random order service replica while the clients is running, and then bring it back online after some time. In order to evaluate in what degree the clients can notice the failure, we do the same experiment without artificial crashes. And finally give our conclusion according to the packet loss rate, total latency, the number of lines in order log file, etc.
+
+
+
+Please check out the [Evaluation Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/evaluation/evaluation%20document.pdf) for details.
+
+
+
+![evaluation](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/figures/aws2.png)
+
+
+
+## :calling: Contact
+Thank you so much for your interests. Note that this project can not straightforward be your course assignment solution. Do not download and submit my code without any change. Feel free to reach me out and I am happy to modify the Maxleo online store further with you.
+* Email: maoqinzhu@umass.edu or zhumaxy@gmail.com
+* LinkedIn: [Max Zhu](https://www.linkedin.com/in/maoqin-zhu/)
