@@ -18,7 +18,7 @@ You will see two programming parts in the following sections. In the first part,
 
 
 
-In this part, we implemented an online Toy store as a socket-based client-server application. Our design should be able multiple client processes making **concurrent requests to the server.** The main part of the assignment is to **implement our own ThreadPool** (not allowed to use a ThreadPool framework that are available by the language/libraries).
+In this part, we implemented an online Toy store as a socket-based client-server application. Our design should be able multiple client processes making concurrent requests to the server. The main task here is to implement our own ThreadPool (not allowed to use a ThreadPool framework that are available by the language/libraries).
 
 
 
@@ -70,7 +70,7 @@ Please check out the [Evaluation Document](https://github.com/MaxyZhu75/Maxleo-O
 
 
 
-In this part, we implemented our online Toy store using **modern gRPC framework** and **built-in thread pool support**. Our design should be able multiple client processes making **concurrent requests to the server.**
+In this part, we implemented our online Toy store using modern gRPC framework and built-in thread pool support. Our design should be able multiple client processes making concurrent requests to the server.
 
 
 
