@@ -42,7 +42,7 @@ It should be able to randomly queries an item, if the returned quantity is great
 
 
 
-* Mode 1: Query and Buy randomly.
+* Mode 1: Query and buy randomly.
 
 
 
