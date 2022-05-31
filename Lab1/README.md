@@ -18,7 +18,7 @@ You will see two programming parts in the following sections. In the first part,
 
 
 
-In this part, we implemented an online Toy store as a socket-based client-server application. Our design should be able multiple client processes making concurrent requests to the server. The main task here is to implement our own ThreadPool (not allowed to use a ThreadPool framework that are available by the language/libraries).
+In this part, we implemented an online Toy store as a socket-based client-server application. Our design should be able multiple client processes making concurrent requests to the server. The main task here is to implement our own Thread Pool (not allowed to use a Thread Pool framework that are available by the language/libraries).
 
 
 
@@ -46,7 +46,7 @@ Here we provide a tutorial for you to run and test our source code. Please check
 
 
 
-A simple load test and performance measurements have been performed in this lab. The goal here is understand how to perform load tests on distributed applications and understand performance. Deploy more than one more client process and have each one make concurrent requests to the server. The clients should be running on a different machine than the server. And then measure the latency seen by the client.
+A load test and performance measurements have been performed in this lab. The goal here is understand how to perform load tests on distributed applications and understand performance. Deploy more than one more client process and have each one make concurrent requests to the server. The clients should be running on a different machine than the server. And then measure the latency seen by the client.
 
 
 
@@ -78,7 +78,7 @@ The server component should implement two gRPC calls: (1) Query(itemName), which
 
 
 
-We use protobuf to create appropriate message structures for arguments and return values of both calls, and design rpc methods as noted above. Since the thread pool is dynamic, we should set an appropriate max limit on the maximum number of concurrent RPCs when starting our server. Use appropriate synchronization methods on the product catalog since querying and buying will read from and write to the catalog, which make it a shared data structure. And also implement appropriate error/exception handling as needed for our design (for example, an item may be in stock when queried but stock may run out by the time the client sends a buy request)
+We use protobuf to create appropriate message structures for arguments and return values of both calls, and design rpc methods as noted above. Since the thread pool is dynamic, we should set an appropriate max limit on the maximum number of concurrent RPCs when starting our server. Use appropriate synchronization methods on the product catalog since querying and buying will read from and write to the catalog, which make it a shared data structure. And also implement appropriate error/exception handling as needed for our design (for example, an item may be in stock when queried, but stock may run out by the time the client sends a buy request)
 
 
 
@@ -93,7 +93,7 @@ Here we provide a tutorial for you to run and test our source code. Please check
 
 
 ## Evaluation
-A simple load test and performance measurements have been performed by us. The goal here is understand how to perform load tests on distributed applications and understand performance. Deploy more than one more client process and have each one make concurrent requests to the server. The clients should be running on a different machine than the server. Measure the latency seen by the client for different types of requests, such as query and buy.
+A load test and performance measurements have been performed by us. The goal here is understand how to perform load tests on distributed applications and understand performance. Deploy more than one more client process and have each one make concurrent requests to the server. The clients should be running on a different machine than the server. Measure the latency seen by the client for different types of requests, such as query and buy.
 
 
 
