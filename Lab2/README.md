@@ -2,11 +2,23 @@
 
 
 
-You will see two programming parts in the following sections. In the first part, we aim to design distributed server applications using a multi-tier architecture and microservices. In the second part, we will learn how to use Docker to containerize our micro-service, and learn to manage an application consisting of multiple containers using Docker Compose.
+This lab has the following learning outcomes with regards to advanced concepts in distributed operating systems.
+* Design distributed server applications using a multi-tier architecture and microservices.
+* Design virtualized applications.
+* Design interfaces for web application.
 
 
 
-# Part 1 - Implementation with Socket Connection and Handwritten Thread Pool
+The lab also has the following learning outcomes with regards to practice and modern technologies.
+* Learn how to implement a REST API server.
+* Learn how to measure the performance of a distributed application.
+* Learn how to use Docker to containerize your micro-service, and learn to manage an application consisting
+   of multiple containers using Docker Compose.
+* Learn how to automatically test a distributed application.
+
+
+
+# Part 1 - Implement Multi-Tiered Toy Store as Microservices
 
 
 
@@ -18,128 +30,174 @@ You will see two programming parts in the following sections. In the first part,
 
 
 
-In this part, we implemented an online Toy store as a socket-based client-server application. Our design should be able multiple client processes making **concurrent requests to the server.** The main part of the assignment is to **implement our own ThreadPool** (not allowed to use a ThreadPool framework that are available by the language/libraries).
+Here we simply summarize the responsibilities of each components as follows. Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/design/design%20document.pdf) for details.
 
 
 
-The server component should implement a single method Query, which takes a single string argument that specifies the name of the toy. The Query method returns the dollar price of the item (as a floating point value such as 25.99) if the item is in stock. It returns -1 if the item is not found and 0 if the item is found but not in stock. The client component should connect to the server using a socket connection. It should construct a message in the form of a buffer specifying the method name (e.g., string "Query") and arguments ("toyName"). The message is sent to the server over the socket connection. The return value is another buffer containing the cost of the item or an error code such as -1 and 0, as noted above.
+### Client
 
 
 
-# 💻 Part 2 - Containerize Your Application
-![part2](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/part2.jpg)
+It should be able to randomly queries an item, if the returned quantity is greater than 0, with probability “p” (environment variable initialized in terminal) it will send an order request.
 
 
-## Server Start Up Tutorial (on Local Machine)
-**Step1:** Before running containers, we should build the Docker images.
 
-**$ sudo docker build -f catalog_dockerfile . -t catalog**
+* Mode 1: Query and Buy randomly.
 
 
-**$ sudo docker build -f order_dockerfile . -t order**
 
+* Mode 2: Initiate a serials of Query.
 
-**$ sudo docker build -f front_end_dockerfile . -t front_end**
 
 
-![build1](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/build1.png)
+* Mode 3: Initiate a serials of Buy.
 
 
-**Step2:** Then we can run dockers using Docker compose as follows.
 
+### Front-end Server
 
-**$ cd src**
 
 
-**$ sudo docker-compose up**
+Note that when implementing the front-end service, we did NOT use existing web frameworks such as Django, Flask, Spark, etc. Rather we design and implement our own functionalities.
 
 
-![docker1](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/docker1.png)
 
+* Interact with clients.
 
-## Functional Test Tutorial
-Looking at **"test_func.py"**, for different HTTP GET / HTTP POST, we created 13 test cases which correspond to 13 possible HTTP responses described in [design document](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/design%20document.pdf) Part 1 Section 2.1.
 
 
-**Notice that our test cases are effective only when database is in initial state, because expected response is configured statically in testing codes!!!** Of course, you can also run your own test case simply by configuring request parameters and expected responses in the method. The initial state of database should be:
+* Dispatch clients requests properly.
 
 
-![database1](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/database1.png)
 
+* Filter invalid bad requests.
 
 
-Looking at **“test_func.sh”**, this shell file will help us run all the 13 test cases.
 
+### Catalog Server
 
-**Notice that each time if you are running this shell, please configure those IP addresses(environment variables) manually. Thank you!!!** And also be careful when you do local test. When starting a server, we will print IP address on your screen. Type that IP address as environment variable rather than “127.0.0.1”.
 
 
-![shell1](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/shell1.png)
+We implemented the catalog server as an in memory but persistent on disk database. In other words, in our application, it is sort of like the Redis.
 
 
-**Step1:** Type the following command:
 
+* Maintain data in memory & Persist data on disk.
 
-**$ sh test_func.sh**
 
 
-For each test case(valid/invalid requests), if our application or micro-services work correctly, Python unittest will tell “ok” on your terminal. As you can see, all the functionalities is working correctly as follows.
+* Process the “Buy” request from order server.
 
 
-![func1](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/func1.png)
-![func2](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/func2.png)
 
+* Concurrency & Synchronization.
 
-And also, after finishing those 13 test cases, we can see the order log has been recorded correctly (**order ID is -1** if the order has not been placed), and the database has been persisted too.
 
 
-![func3](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/func3.png)
-![func4](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/func4.png)
+### Order Server
 
 
 
-**Step2:** Looking at **“client.py”**, we implemented 3 modes for you. Type the following command:
+The order server will process all the “Buy” (POST) requests from the front-end server. It should communicate with catalog server during the process.
 
 
-**$ FRONT=172.20.0.4 p=0.5 python3 client.py**
 
+* Communicate with catalog server.
 
-**Mode 1:** Query and Buy randomly: It randomly queries an item, if the returned
-quantity is greater than 0, with probability “p”(environment variable initialized in terminal) it will send an order request.
 
 
-**Mode 2:** Initiate a serials of Query
-You can specify the toy name and query times as you want. 
+* Generate correct order ID.
 
 
-**Mode 3:** Initiate a serials of Buy
-You can specify the toy name, quantity and number of requests as you want.
 
+* Write order log.
 
-![client1](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/client1.png)
-
-
-## Load Test Tutorial
-Looking at **“test_load.py”**, it automatically sends **1000** HTTP GET/ **100** HTTP POST. Python unittest can help measure the total latency seen by clients in this case. Hence, in terms of average latency for each request, we should divide the total time by **1000** or by **100**. Here we vary the number of clients from 1 to 5 and measure the total latency as the load goes up. For each client terminal, type the following command as you want:
-
-
-**$ FRONT=172.19.0.4 python3 -m unittest -v test_load.TestLoadPerformance.test_load_query**
-
-
-**$ FRONT=172.19.0.4 python3 -m unittest -v test_load.TestLoadPerformance.test_load_buy**
-
-
-You could check out the [output document](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/output.pdf) for details, the testing result could be like:
-
-
-![load1](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/loas1.png)
-![load2](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/figures/part2/load3.png)
 
 
 ## Way to Approach
-Please check [design document](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/design%20document.pdf) for details.
 
 
-## Simulation Results
-Please check [Output](https://github.com/umass-cs677/lab2-spring22-yixiang_l2/blob/main/docs/output.pdf) for details.
 
+Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/design/design%20document.pdf) for details.
+
+
+
+## Tutorial
+
+
+
+Here we provide a tutorial for you to run and test our source code. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/outputs/output.pdf) for details.
+
+
+
+## Evaluation
+
+
+
+We applied **Python Unittest Module** to test the functionality & load performance of the full application as well as the micro-services. The unittest unit framework supports test automation, sharing of setup and shutdown code for tests, aggregation of tests into collections, and independence of the tests from the reporting framework.
+
+
+
+Please check out the [Evaluation Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/evaluation/evaluation%20document.pdf) for details.
+
+
+
+![evaluation](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/figures/part1/load2.png)
+
+
+
+
+# Part 2 - Containerize Application with Docker
+
+
+
+![part2](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/figures/part2/part2.jpg)
+
+
+
+## Problem Statement
+
+
+
+In this part, we will first containerize our application code, and then learn to deploy all components as a distributed application using Docker.
+
+
+
+**Docker** provides the ability to package and run an application in a loosely isolated environment. The isolation and security allows us to run many containers simultaneously on a given host.
+
+
+
+**Docker Compose** is a Docker tool which used to define and run multi-container applications. We use a YAML file to configure our application’s services, and then with a single command, we can create and start all the services from our configuration.
+
+
+
+## Way to Approach
+Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/design/design%20document.pdf) for details.
+
+
+
+## Tutorial
+Here we provide a tutorial for you to run and test our source code. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/outputs/output.pdf) for details.
+
+
+
+## Evaluation
+
+
+
+We applied **Python Unittest Module** to test the functionality & load performance of the full application as well as the micro-services. The unittest unit framework supports test automation, sharing of setup and shutdown code for tests, aggregation of tests into collections, and independence of the tests from the reporting framework.
+
+
+
+Please check out the [Evaluation Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/evaluation/evaluation%20document.pdf) for details.
+
+
+
+![evaluation](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/figures/part2/load2.png)
+
+
+
+## :calling: Contact
+Thank you so much for your interests. Note that this project can not straightforward be your course assignment solution. Do not download and submit my code without any change. Feel free to reach me out and I am happy to modify the Maxleo online store further with you.
+* Email: maoqinzhu@umass.edu or zhumaxy@gmail.com
+* LinkedIn: [Max Zhu](https://www.linkedin.com/in/maoqin-zhu/)
