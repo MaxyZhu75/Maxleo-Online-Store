@@ -2,7 +2,18 @@
 
 
 
-You will see two programming parts in the following sections. In the first part, we aim to design our own thread pool, and use it to write a simple client-server online store that uses network sockets. This part will show you how thread pools work internally. In the second part, we will use gRPC and built-in thread pool mechanisms to write the client-server online store. This part will show you how we use modern frameworks to write distributed applications, since most programmers simply use higher-level abstractions than lower-level abstractions in workplace.
+This lab has the following learning outcomes with regards to advanced concepts in distributed operating systems.
+* Designed distributed client-server applications.
+* Designed a concurrent networked server application.
+* Designed our own thread pool for servers, and use thread pool abstractions provided by major languages.
+* Designed distributed applications using a low-level abstraction of socket communication as well as high-level abstraction of remote procedure calls.
+
+
+
+The lab also has the following learning outcomes with regards to practice and modern technologies.
+* Learned how to use gRPC, a modern RPC framework.
+* Learned how to measure the performance of a distributed application.
+* Learned how to use version control and build tools.
 
 
 
