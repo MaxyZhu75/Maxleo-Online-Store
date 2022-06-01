@@ -1,4 +1,4 @@
-# :elephant: Maxleo Online Store - Lab 3
+# :teddy_bear: Maxleo Online Store - Lab 3
 
 
 
@@ -66,7 +66,7 @@ Our goal is making sure that the online store application does not lose any orde
 
 
 
-Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/design/design%20document.pdf) for details.
+Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/design/design%20document.pdf) for details.
 
 
 
@@ -112,7 +112,7 @@ We are deploying our online application on an **m5a.large** instance in the us-e
 
 
 ## Way to Approach
-Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab2/summary/design/design%20document.pdf) for details.
+Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/design/design%20document.pdf) for details.
 
 
 
