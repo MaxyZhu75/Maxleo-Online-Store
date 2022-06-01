@@ -1,7 +1,7 @@
 ![Overview](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/figures/Overview.png)
 
 
-# :elephant: Maxleo Online Store
+# 🦁 Maxleo Online Store
 
 
 
