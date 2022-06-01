@@ -1,4 +1,4 @@
-# :elephant: Maxleo Online Store - Lab 2
+# :whale: Maxleo Online Store - Lab 2
 
 
 
