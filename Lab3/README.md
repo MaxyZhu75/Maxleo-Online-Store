@@ -107,7 +107,7 @@ Please check out the [Evaluation Document](https://github.com/MaxyZhu75/Maxleo-O
 
 
 
-Amazon Elastic Compute Cloud (EC2) provides scalable computing capacity in the Amazon Web Services (AWS) Cloud. Using Amazon EC2 eliminates our need to invest in hardware up front, so we can develop and deploy applications faster. We can use Amazon EC2 to launch as many or as few virtual servers as we need, configure security and networking, and manage storage. Specifically, we are deploying our online application on an **m5a.large** instance in the us-east-1 region on AWS.
+We are deploying our online application on an **m5a.large** instance in the us-east-1 region on AWS. Amazon Elastic Compute Cloud (EC2) provides scalable computing capacity in the Amazon Web Services (AWS) Cloud. Using Amazon EC2 eliminates our need to invest in hardware up front, so we can develop and deploy applications faster. We can use Amazon EC2 to launch as many or as few virtual servers as we need, configure security and networking, and manage storage.
 
 
 
