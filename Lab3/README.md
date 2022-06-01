@@ -74,7 +74,7 @@ Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Onlin
 
 
 
-Here we provide a tutorial for you to run and test our source code. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/tree/main/Lab3/summary/outputs) for details.
+Here we provide a tutorial for you to run and test our source code. Please check out the [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/outputs/output.pdf) for details.
 
 
 
@@ -117,7 +117,7 @@ Please check out the [Design Document](https://github.com/MaxyZhu75/Maxleo-Onlin
 
 
 ## Tutorial
-Here we provide a basic AWS Cloud deployment tutorial for you. Please check out the [Evaluation Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/evaluation/evaluation%20document.pdf) and [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/tree/main/Lab3/summary/outputs) for details.
+Here we provide a basic AWS Cloud deployment tutorial for you. Please check out the [Evaluation Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/evaluation/evaluation%20document.pdf) and [Outputs Document](https://github.com/MaxyZhu75/Maxleo-Online-Store/blob/main/Lab3/summary/outputs/output.pdf) for details.
 
 
 
