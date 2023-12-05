@@ -61,4 +61,4 @@ Please click [here](https://github.com/MaxyZhu75/Maxleo-Online-Store/tree/main/L
 ## :calling: Contact
 Thank you so much for your interests. Note that this project can not straightforward be your course assignment solution. Do not download and submit my code without any change. Feel free to reach me out and I am happy to modify the Maxleo online store further with you.
 * Email: maoqinzhu@umass.edu or zhumaxy@gmail.com
-* LinkedIn: [Max Zhu](https://www.linkedin.com/in/maoqin-zhu/)
+* LinkedIn: [Max Zhu](https://www.linkedin.com/in/maoqinzhu/)
