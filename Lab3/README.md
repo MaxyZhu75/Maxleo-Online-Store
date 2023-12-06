@@ -1,4 +1,4 @@
-# :teddy_bear: Maxleo Online Store - Lab 3
+# :earth_asia: Maxleo Online Store - Lab 3
 
 
 
